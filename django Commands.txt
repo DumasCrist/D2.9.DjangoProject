@@ -1,0 +1,384 @@
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Try the new cross-platform PowerShell https://aka.ms/pscore6
+
+PS C:\Users\Anton\Desktop\PycharmProjects\News> python -m venv venv
+PS C:\Users\Anton\Desktop\PycharmProjects\News> venv\scripts\activate
+(venv) PS C:\Users\Anton\Desktop\PycharmProjects\News> pip install django
+Collecting django
+  Using cached Django-4.1.7-py3-none-any.whl (8.1 MB)
+Collecting sqlparse>=0.2.2
+  Using cached sqlparse-0.4.3-py3-none-any.whl (42 kB)
+  Using cached tzdata-2022.7-py2.py3-none-any.whl (340 kB)
+Installing collected packages: tzdata, sqlparse, asgiref, django
+Successfully installed asgiref-3.6.0 django-4.1.7 sqlparse-0.4.3 tzdata-2022.7
+WARNING: You are using pip version 22.0.4; however, version 23.0.1 is available.
+You should consider upgrading via the 'C:\Users\Anton\Desktop\PycharmProjects\News\venv\Scripts\python.exe -m pip install --upgrade pip' command.        
+(venv) PS C:\Users\Anton\Desktop\PycharmProjects\News> django-admin startproject MewsPaper
+(venv) PS C:\Users\Anton\Desktop\PycharmProjects\News> cd NewsPaper
+(venv) PS C:\Users\Anton\Desktop\PycharmProjects\News\NewsPaper> python3 manage.py startapp new_ news
+At line:1 char:1
++ python3 manage.py startapp new_ news
++ ~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (python3:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+(venv) PS C:\Users\Anton\Desktop\PycharmProjects\News\NewsPaper> python manage.py startapp new_news
+(venv) PS C:\Users\Anton\Desktop\PycharmProjects\News\NewsPaper> py manage.py makemigrations
+SystemCheckError: System check identified some issues:
+ERRORS:
+new_news.PostCategory: (fields.E336) The model is used as an intermediate model by 'new_news.Post.postCategory', but it does not have a foreign key to 'P
+ost' or 'Category'.
+(venv) PS C:\Users\Anton\Desktop\PycharmProjects\News\NewsPaper> py manage.py makemigrations
+Migrations for 'new_news':
+  new_news\migrations\0001_initial.py
+    - Create model Author
+    - Create model Category
+    - Create model PostCategory
+    - Add field postCategory to post
+    - Create model Comment
+(venv) PS C:\Users\Anton\Desktop\PycharmProjects\News\NewsPaper> py manage.py migrate
+Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, new_news, sessions
+Running migrations:
+  Applying contenttypes.0001_initial... OK
+  Applying auth.0001_initial... OK
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying contenttypes.0002_remove_content_type_name... OK
+  Applying auth.0002_alter_permission_name_max_length... OK
+  Applying auth.0003_alter_user_email_max_length... OK
+  Applying auth.0004_alter_user_username_opts... OK
+  Applying auth.0005_alter_user_last_login_null... OK
+  Applying auth.0006_require_contenttypes_0002... OK
+  Applying auth.0007_alter_validators_add_error_messages... OK
+  Applying auth.0008_alter_user_username_max_length... OK
+  Applying auth.0009_alter_user_last_name_max_length... OK
+  Applying auth.0010_alter_group_name_max_length... OK
+  Applying auth.0012_alter_user_first_name_max_length... OK
+  Applying new_news.0001_initial... OK
+  Applying sessions.0001_initial... OK
+(venv) PS C:\Users\Anton\Desktop\PycharmProjects\News\NewsPaper> py manage.py shell
+Python 3.9.11 (tags/v3.9.11:2de452f, Mar 16 2022, 14:33:45) [MSC v.1929 64 bit (AMD64)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+(InteractiveConsole)
+>>> from new_news.models import *
+>>> u1 = User.objects.create_user(username='Ivan')    
+>>> u1
+<User: Ivan>
+>>> u2 = User.objects.create_user(username='Alex') 
+>>> u2
+<User: Alex>
+>>> Author.objects.create(authorUser=u1)
+<Author: Author object (1)>
+>>> Category.objects.create(name='Politics')
+<Category: Category object (1)>
+>>> Author.objects.create(authorUser=u2) 
+<Author: Author object (2)>
+>>> Category.objects.create(name='Technology')
+<Category: Category object (2)>
+>>> Category.objects.create(name='Economics')
+>>> Post.objects.get(id=1)
+<Post: Post object (1)>
+>>> Post.objects.get(id=1).title
+'sometitle'
+>>> Post.objects.get(id=1).categoryType
+>>> Post.odjects.get(id=1).postCategory.add(Category.objects.get(id=1))
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+AttributeError: type object 'Post' has no attribute 'odjects'
+>>> Post.odjects.get(id=1)
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+AttributeError: type object 'Post' has no attribute 'odjects'
+>>> Post.objects.get(id=1).title
+'sometitle'
+>>> Post.odjects.get(id=1).postCategory.add(Category.objects.get(id=1))
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+AttributeError: type object 'Post' has no attribute 'odjects'
+>>> Post.odjects.get(id=1).postcategory.add(Category.objects.get(id=1)) 
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+AttributeError: type object 'Post' has no attribute 'odjects'
+>>> Post.odjects.get(id=1).PostCategory.add(Category.objects.get(id=1)) 
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+AttributeError: type object 'Post' has no attribute 'odjects'
+>>> Post.objects.get(id=1)
+<Post: Post object (1)>
+>>> Post.odjects.get(id=1).postCategory.add(Category.objects.get(id=1)) 
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+AttributeError: type object 'Post' has no attribute 'odjects'
+>>> Post.objects.get(id=1).postCategory.add(Category.objects.get(id=1)) 
+>>> Post.objects.get(id=1).postCategory.add(Category.objects.get(id=2)) 
+>>> Post.objects.get(id=1).postCategory.add(Category.objects.get(id=3)) 
+>>> Post.objects.get(id=2).postCategory.add(Category.objects.get(id=1)) 
+>>> Post.objects.get(id=2).postCategory.add(Category.objects.get(id=2)) 
+>>> Comment.objects.create(commentPost=Post.objects.get(id=1), commentUser=Author.objects.get(id=1), text='anyinfobyAuthor')
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+  File "C:\Users\Anton\Desktop\PycharmProjects\News\venv\lib\site-packages\django\db\models\manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "C:\Users\Anton\Desktop\PycharmProjects\News\venv\lib\site-packages\django\db\models\query.py", line 669, in create
+    obj = self.model(**kwargs)
+  File "C:\Users\Anton\Desktop\PycharmProjects\News\venv\lib\site-packages\django\db\models\base.py", line 541, in __init__
+    _setattr(self, field.name, rel_obj)
+  File "C:\Users\Anton\Desktop\PycharmProjects\News\venv\lib\site-packages\django\db\models\fields\related_descriptors.py", line 237, in __set__
+    raise ValueError(
+ValueError: Cannot assign "<Author: Author object (1)>": "Comment.commentUser" must be a "User" instance.
+>>> Comment.objects.create(commentPost=Post.objects.get(id=1), commentUser=Author.objects.get(id=1).authorUser, text='anyinfobyAuthor')
+<Comment: Comment object (1)>
+>>> Comment.objects.create(commentPost=Post.objects.get(id=1), commentUser=Author.objects.get(id=2).authorUser, text='anyinfobyAuthor') 
+<Comment: Comment object (2)>
+>>> Comment.objects.create(commentPost=Post.objects.get(id=2), commentUser=Author.objects.get(id=1).authorUser, text='anyinfobyAuthor') 
+<Comment: Comment object (3)>
+>>> Comment.objects.create(commentPost=Post.objects.get(id=2), commentUser=Author.objects.get(id=2).authorUser, text='anyinfobyAuthor') 
+<Comment: Comment object (4)>
+>>> Comment.objects.create(commentPost=Post.objects.get(id=3), commentUser=Author.objects.get(id=1).authorUser, text='anyinfobyAuthor') 
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+  File "C:\Users\Anton\Desktop\PycharmProjects\News\venv\lib\site-packages\django\db\models\manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "C:\Users\Anton\Desktop\PycharmProjects\News\venv\lib\site-packages\django\db\models\query.py", line 650, in get
+    raise self.model.DoesNotExist(
+new_news.models.Post.DoesNotExist: Post matching query does not exist.
+>>> Comment.objects.create(commentPost=Post.objects.get(id=2), commentUser=Author.objects.get(id=3).authorUser, text='anyinfobyAuthor') 
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+  File "C:\Users\Anton\Desktop\PycharmProjects\News\venv\lib\site-packages\django\db\models\manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "C:\Users\Anton\Desktop\PycharmProjects\News\venv\lib\site-packages\django\db\models\query.py", line 650, in get
+    raise self.model.DoesNotExist(
+new_news.models.Author.DoesNotExist: Author matching query does not exist.
+>>> Comment.objects.get(id=1).like()
+>>> Comment.objects.get(id=1).raiting
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+AttributeError: 'Comment' object has no attribute 'raiting'
+>>> Comment.objects.get(id=1).rating  
+1
+>>> Comment.objects.get(id=2).like()  
+>>> Comment.objects.get(id=3).like() 
+>>> Comment.objects.get(id=4).like() 
+>>> Comment.objects.get(id=2).rating  
+1
+>>> Comment.objects.get(id=2).like() 
+>>> Comment.objects.get(id=3).like() 
+>>> Comment.objects.get(id=3).like()
+>>> Comment.objects.get(id=4).like() 
+>>> Comment.objects.get(id=4).like() 
+>>> Comment.objects.get(id=4).like()
+>>> Comment.objects.get(id=4).like()
+>>> Comment.objects.get(id=2).rating 
+2
+>>> Comment.objects.get(id=4).rating 
+5
+>>> Comment.objects.get(id=3).rating 
+3
+>>> Comment.objects.get(id=1).rating 
+1
+>>> Comment.objects.get(id=1).dislike() 
+>>> Comment.objects.get(id=1).dislike()
+>>> Comment.objects.get(id=2).dislike() 
+>>> Comment.objects.get(id=3).dislike() 
+>>> Comment.objects.get(id=4).dislike() 
+>>> Comment.objects.get(id=4).rating   
+4
+>>> Comment.objects.get(id=3).rating 
+2
+>>> Comment.objects.get(id=2).rating 
+1
+>>> Comment.objects.get(id=1).rating 
+-1
+>>> Author.objects.get(id=1)
+<Author: Author object (1)>
+>>> a = Author.objects.get(id=1)
+>>> a.update_rating()
+>>> a.ratingAuthor
+1
+>>> Author.objects.get(id=2) 
+<Author: Author object (2)>
+>>> b = Author.objects.get(id=2) 
+>>> b.update_rating()
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+  File "C:\Users\Anton\Desktop\PycharmProjects\News\NewsPaper\new_news\models.py", line 14, in update_rating
+    pRat += postRat.get('postRating')
+TypeError: unsupported operand type(s) for +=: 'int' and 'NoneType'
+>>> b.update_rating() 
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+  File "C:\Users\Anton\Desktop\PycharmProjects\News\NewsPaper\new_news\models.py", line 14, in update_rating
+    pRat += postRat.get('postRating')
+TypeError: unsupported operand type(s) for +=: 'int' and 'NoneType'
+>>> Post.objects.get(id=1).like()
+>>> a.update_rating()
+>>> a.ratingAuthor
+4
+>>> Post.objects.get(id=2).like() 
+>>> b.update_rating()
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+  File "C:\Users\Anton\Desktop\PycharmProjects\News\NewsPaper\new_news\models.py", line 14, in update_rating
+    pRat += postRat.get('postRating')
+TypeError: unsupported operand type(s) for +=: 'int' and 'NoneType'
+>>> a = Author.objects.order_by('-ratingAuthor')[:1]
+>>> a
+<QuerySet [<Author: Author object (1)>]>
+>>> a = Author.objects.order_by('-ratingAuthor')    
+>>> a
+<QuerySet [<Author: Author object (1)>, <Author: Author object (2)>]>
+>>> Author.objects.create(authorUser=u2) 
+Traceback (most recent call last):
+  File "C:\Users\Anton\Desktop\PycharmProjects\News\venv\lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "C:\Users\Anton\Desktop\PycharmProjects\News\venv\lib\site-packages\django\db\backends\sqlite3\base.py", line 357, in execute
+    return Database.Cursor.execute(self, query, params)
+sqlite3.IntegrityError: UNIQUE constraint failed: new_news_author.authorUser_id
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+  File "C:\Users\Anton\Desktop\PycharmProjects\News\venv\lib\site-packages\django\db\models\manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "C:\Users\Anton\Desktop\PycharmProjects\News\venv\lib\site-packages\django\db\models\query.py", line 671, in create
+    obj.save(force_insert=True, using=self.db)
+  File "C:\Users\Anton\Desktop\PycharmProjects\News\venv\lib\site-packages\django\db\models\base.py", line 812, in save
+    self.save_base(
+  File "C:\Users\Anton\Desktop\PycharmProjects\News\venv\lib\site-packages\django\db\models\base.py", line 863, in save_base
+    updated = self._save_table(
+  File "C:\Users\Anton\Desktop\PycharmProjects\News\venv\lib\site-packages\django\db\models\base.py", line 1006, in _save_table
+    results = self._do_insert(
+  File "C:\Users\Anton\Desktop\PycharmProjects\News\venv\lib\site-packages\django\db\models\base.py", line 1047, in _do_insert
+    return manager._insert(
+  File "C:\Users\Anton\Desktop\PycharmProjects\News\venv\lib\site-packages\django\db\models\manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "C:\Users\Anton\Desktop\PycharmProjects\News\venv\lib\site-packages\django\db\models\query.py", line 1791, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+  File "C:\Users\Anton\Desktop\PycharmProjects\News\venv\lib\site-packages\django\db\models\sql\compiler.py", line 1660, in execute_sql
+    cursor.execute(sql, params)
+  File "C:\Users\Anton\Desktop\PycharmProjects\News\venv\lib\site-packages\django\db\backends\utils.py", line 102, in execute
+    return super().execute(sql, params)
+  File "C:\Users\Anton\Desktop\PycharmProjects\News\venv\lib\site-packages\django\db\backends\utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+  File "C:\Users\Anton\Desktop\PycharmProjects\News\venv\lib\site-packages\django\db\backends\utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "C:\Users\Anton\Desktop\PycharmProjects\News\venv\lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "C:\Users\Anton\Desktop\PycharmProjects\News\venv\lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\Anton\Desktop\PycharmProjects\News\venv\lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "C:\Users\Anton\Desktop\PycharmProjects\News\venv\lib\site-packages\django\db\backends\sqlite3\base.py", line 357, in execute
+    return Database.Cursor.execute(self, query, params)
+django.db.utils.IntegrityError: UNIQUE constraint failed: new_news_author.authorUser_id
+>>> Author.objects.create(authorUser=u2)                                    
+Traceback (most recent call last):
+  File "C:\Users\Anton\Desktop\PycharmProjects\News\venv\lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "C:\Users\Anton\Desktop\PycharmProjects\News\venv\lib\site-packages\django\db\backends\sqlite3\base.py", line 357, in execute
+    return Database.Cursor.execute(self, query, params)
+sqlite3.IntegrityError: UNIQUE constraint failed: new_news_author.authorUser_id
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+  File "C:\Users\Anton\Desktop\PycharmProjects\News\venv\lib\site-packages\django\db\models\manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "C:\Users\Anton\Desktop\PycharmProjects\News\venv\lib\site-packages\django\db\models\query.py", line 671, in create
+    obj.save(force_insert=True, using=self.db)
+  File "C:\Users\Anton\Desktop\PycharmProjects\News\venv\lib\site-packages\django\db\models\base.py", line 812, in save
+    self.save_base(
+  File "C:\Users\Anton\Desktop\PycharmProjects\News\venv\lib\site-packages\django\db\models\base.py", line 863, in save_base
+    updated = self._save_table(
+  File "C:\Users\Anton\Desktop\PycharmProjects\News\venv\lib\site-packages\django\db\models\base.py", line 1006, in _save_table
+    results = self._do_insert(
+  File "C:\Users\Anton\Desktop\PycharmProjects\News\venv\lib\site-packages\django\db\models\base.py", line 1047, in _do_insert
+    return manager._insert(
+  File "C:\Users\Anton\Desktop\PycharmProjects\News\venv\lib\site-packages\django\db\models\manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "C:\Users\Anton\Desktop\PycharmProjects\News\venv\lib\site-packages\django\db\models\query.py", line 1791, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+  File "C:\Users\Anton\Desktop\PycharmProjects\News\venv\lib\site-packages\django\db\models\sql\compiler.py", line 1660, in execute_sql
+    cursor.execute(sql, params)
+  File "C:\Users\Anton\Desktop\PycharmProjects\News\venv\lib\site-packages\django\db\backends\utils.py", line 102, in execute
+    return super().execute(sql, params)
+  File "C:\Users\Anton\Desktop\PycharmProjects\News\venv\lib\site-packages\django\db\backends\utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+  File "C:\Users\Anton\Desktop\PycharmProjects\News\venv\lib\site-packages\django\db\backends\utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "C:\Users\Anton\Desktop\PycharmProjects\News\venv\lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "C:\Users\Anton\Desktop\PycharmProjects\News\venv\lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\Anton\Desktop\PycharmProjects\News\venv\lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "C:\Users\Anton\Desktop\PycharmProjects\News\venv\lib\site-packages\django\db\backends\sqlite3\base.py", line 357, in execute
+    return Database.Cursor.execute(self, query, params)
+django.db.utils.IntegrityError: UNIQUE constraint failed: new_news_author.authorUser_id
+>>> a = Author.objects.order_by('-ratingAuthor')[:1]
+>>> for i in a:
+...     i,ratingAuthor
+...     i.ratingAuthor
+...     i.authorUser.username
+... 
+Traceback (most recent call last):
+  File "<console>", line 2, in <module>
+NameError: name 'ratingAuthor' is not defined
+>>> for i in a:
+...     i.ratingAuthor
+...     i.authorUser.username
+... 
+4
+'Ivan'
+>>> Post.objects.get(id=4).all() 
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+  File "C:\Users\Anton\Desktop\PycharmProjects\News\venv\lib\site-packages\django\db\models\manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "C:\Users\Anton\Desktop\PycharmProjects\News\venv\lib\site-packages\django\db\models\query.py", line 650, in get
+    raise self.model.DoesNotExist(
+new_news.models.Post.DoesNotExist: Post matching query does not exist.
+>>> Post.objects.get(id=4).all  
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+  File "C:\Users\Anton\Desktop\PycharmProjects\News\venv\lib\site-packages\django\db\models\manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "C:\Users\Anton\Desktop\PycharmProjects\News\venv\lib\site-packages\django\db\models\query.py", line 650, in get
+    raise self.model.DoesNotExist(
+new_news.models.Post.DoesNotExist: Post matching query does not exist.
+>>> Post.objects.get(id=1).all()
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+AttributeError: 'Post' object has no attribute 'all'
+>>> author2 = Author.objects.get(id=2)
+>>> author2
+<Author: Author object (2)>
+>>> Post.odjects.create(author=author2, categoryType='AR', title='Politices news', text='something happened')  
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+AttributeError: type object 'Post' has no attribute 'odjects'
+>>> Post.objects.create(author=author2, categoryType='AR', title='Politices news', text='something happened') 
+<Post: Post object (3)>
+>>> author3 = Author.objects.get(id=1)
+>>> author3
+<Author: Author object (1)>
+>>> Post.objects.create(author=author3, categoryType='AR', title='Biology  news', text='something happened')) 
+  File "<console>", line 1
+    Post.objects.create(author=author3, categoryType='AR', title='Biology  news', text='something happened'))
+                                                                                                            ^
+SyntaxError: unmatched ')'
+>>> Post.objects.create(author=author, categoryType='AR', title='Politices news', text='something happened')) 
+  File "<console>", line 1
+    Post.objects.create(author=author, categoryType='AR', title='Politices news', text='something happened'))
+                                                                                                            ^
+SyntaxError: unmatched ')'
+>>> Post.objects.create(author=author3, categoryType='AR', title='Biology  news', text='something happened')  
+<Post: Post object (4)>
+>>>
